@@ -1,6 +1,6 @@
 ################################################################################
 ##
-## BY: WANDERSON M.PIMENTA
+## BY: Zarif Hossain
 ## PROJECT MADE WITH: Qt Designer and PySide2
 ## V: 1.0.0
 ##
@@ -28,6 +28,20 @@ class MainWindow(QMainWindow):
 
   
         # SET TITLE BAR
+
+        
+        def moveWindow(event):
+                # RESTORE BEFORE MOVE
+                if UIFunctions.returnStatus() == 1:
+                    UIFunctions.maximize_restore(self)
+
+                # IF LEFT CLICK MOVE WINDOW
+                if event.buttons() == Qt.LeftButton:
+                    self.move(self.pos() + event.globalPos() - self.dragPos)
+                    self.dragPos = event.globalPos()
+                    event.accept()
+      
+        self.ui.frame.mouseMoveEvent = moveWindow
 
         ## ==> SET UI DEFINITIONS
         UIFunctions.uiDefinitions(self)

@@ -36,7 +36,8 @@ class UIFunctions(MainWindow):
 
         # MINIMIZE
    
-
+        ## ==> CREATE SIZE GRIP TO RESIZE WINDOW
+       
      
 
 
