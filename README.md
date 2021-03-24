@@ -2,7 +2,7 @@
 
 **Requirements 
 
-*stopipy
-*requests
-*time
+*stopipy \n
+*requests \n
+*time \n
 *BeatifulSoup4
