@@ -2,7 +2,7 @@
 
 **Requirements 
 
-*stopipy 
-*requests 
-*time 
-*BeatifulSoup4 
+* stopipy 
+* requests 
+* time 
+* BeatifulSoup4 
