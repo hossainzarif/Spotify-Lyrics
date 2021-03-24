@@ -24,9 +24,11 @@ token = spotipy.util.prompt_for_user_token(
 class MainWindow (QObject):
     def __init__(self):
         QObject.__init__(self)
-
+        chk= ""
         self.timer = QTimer()
-        self.timer.timeout.connect(lambda: self.sing())
+        self.timer.timeout.connect(lambda: self.sing(chk))
+
+
         self.timer.start(1000)
 
 
@@ -34,7 +36,7 @@ class MainWindow (QObject):
     printSing = Signal(str)
     printLyrics = Signal(str)
 
-    def sing(self):
+    def sing(self,chk):
 
         if token:
             # Create a Spotify() instance with our token
@@ -42,6 +44,7 @@ class MainWindow (QObject):
 
             # method currently playing return an actual song on Spotify
             current_song = sp.currently_playing()
+
 
             if(current_song is not None):
 
@@ -58,7 +61,8 @@ class MainWindow (QObject):
 
                 raw_song_name = song_url
 
-                if(chk!= raw_song_name):
+                print(chk)
+                if(chk==""):
                     print("entered")
 
                     song_notations = []
@@ -97,14 +101,18 @@ class MainWindow (QObject):
 
 
                                     # Extract lyrics from beautifulsoup response using the correct prefix {"class": "lyrics"}
-                        lyrics="--"
+                        lyrics="-"
                         if html_code.find("div", {"class": "lyrics"}) is not None:
                             lyrics = html_code.find("div", {"class": "lyrics"}).get_text()
-
-                        print(lyrics)
+                        if lyrics!= "-":
+                            self.printLyrics.emit(lyrics)
                     else:
                         print("Sorry, I can't find the actual lyrics on this request")
-                chk = raw_song_name
+                        self.printLyrics.emit("Sorry, I can't find the actual lyrics on this")
+                if(raw_song_name != chk):
+                    print("AWOL")
+                    chk = raw_song_name
+
             else:
                 print("Play Song for lyrics")
                 self.printSing.emit("Play Song")
@@ -119,9 +127,7 @@ class MainWindow (QObject):
 
 
 
-#    def lyricsrequest(self,raw_names):
-
-#        # try different servers so you dont get blacklisted
+        # try different servers so you dont get blacklisted
 
 
 
